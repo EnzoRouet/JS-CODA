@@ -169,7 +169,7 @@ for (let i = 0; i < taille; i++) {
 }
 console.log("Tableau après tri par matière en français");
 for (let i = 0; i < taille; i++) {
-  console.log(tabCroissant[i].prenom + " - " + tabCroissant[i].notesFrancais);
+  console.log(tabMatière1[i].prenom + " - " + tabMatière1[i].notesFrancais);
 }
 console.log("Nombre de comparaison : " + compt2);
 console.log("Nombre de changement : " + changes);
