@@ -57,35 +57,11 @@ class Player {
     this.dying = data.dying;
   }
 
-  //   animation() {
-  //     if (this.moving) {
-  //       if ((this.direction = "North")) {
-  //         this.walkSpriteIndex = 9;
-  //       } else if (key === "Sud") {
-  //         this.walkSpriteIndex = 11;
-  //       } else if (key === "West") {
-  //         this.walkSpriteIndex = 10;
-  //       } else if (key === "Est") {
-  //         this.walkSpriteIndex = 12;
-  //       }
-  //     } else if (this.dying) {
-  //       this.walkSpriteIndex = 21;
-  //     } else if (this.ATKing) {
-  //       if ((this.direction = "North")) {
-  //         this.walkSpriteIndex = 55;
-  //       } else if (key === "Sud") {
-  //         this.walkSpriteIndex = 57;
-  //       } else if (key === "West") {
-  //         this.walkSpriteIndex = 56;
-  //       } else if (key === "Est") {
-  //         this.walkSpriteIndex = 58;
-  //       }
-  //     } else {
-  //     }
-  //   }
-
   animate() {
     if (this.moving) {
+      this.currentAttackSpriteStep = 0;
+      this.attackSpriteIndex = 0;
+
       this.currentWalkSpriteStep++;
       if (this.currentWalkSpriteStep >= this.walkSpriteDuration) {
         this.currentWalkSpriteStep = 0;
@@ -94,7 +70,14 @@ class Player {
       if (this.walkSpriteIndex >= this.walkSpriteNumber) {
         this.walkSpriteIndex = 0;
       }
-    } else if (this.ATKing) {
+    } else if (
+      this.ATKing ||
+      this.currentAttackSpriteStep > 0 ||
+      this.attackSpriteIndex > 0
+    ) {
+      this.walkSpriteIndex = 0;
+      this.currentWalkSpriteStep = 0;
+
       this.currentAttackSpriteStep++;
       if (this.currentAttackSpriteStep >= this.attackSpriteDuration) {
         this.currentAttackSpriteStep = 0;
@@ -110,7 +93,7 @@ class Player {
         this.dyingSpriteIndex++;
       }
       if (this.dyingSpriteIndex >= this.dyingSpriteNumber) {
-        this.dyingSpriteIndex = 0;
+        this.dead = true;
       }
     } else {
       this.walkSpriteIndex = 0;
@@ -136,10 +119,9 @@ class Player {
     );
   }
 
-  // Dans la classe Player pas script car script n'a pas les coordonées et tout ce qu'il faut
   draw(ctx, img) {
     const spriteSize = 64;
-    const spriteSizeATK = 128;
+    const spriteSizeATK = 192;
 
     let sx, sy;
     let sWidth = spriteSize;
@@ -160,22 +142,26 @@ class Player {
         sy = 11 * spriteSize;
         sx = this.walkSpriteIndex * spriteSize;
       }
-    } else if (this.ATKing) {
+    } else if (
+      this.ATKing ||
+      this.currentAttackSpriteStep > 0 ||
+      this.attackSpriteIndex > 0
+    ) {
       sWidth = spriteSizeATK;
       sHeight = spriteSizeATK;
       middle = 64;
 
       if (this.direction === "North") {
-        sy = 57 * spriteSize;
+        sy = 54 * spriteSize;
         sx = this.attackSpriteIndex * spriteSizeATK;
       } else if (this.direction === "West") {
-        sy = 58 * spriteSize;
+        sy = 57 * spriteSize;
         sx = this.attackSpriteIndex * spriteSizeATK;
       } else if (this.direction === "Sud") {
-        sy = 59 * spriteSize;
+        sy = 60 * spriteSize;
         sx = this.attackSpriteIndex * spriteSizeATK;
       } else if (this.direction === "Est") {
-        sy = 60 * spriteSize;
+        sy = 63 * spriteSize;
         sx = this.attackSpriteIndex * spriteSizeATK;
       }
     } else if (this.dying) {

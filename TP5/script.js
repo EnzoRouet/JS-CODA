@@ -17,25 +17,25 @@ img.onload = () => {
 };
 
 window.addEventListener("keydown", (e) => {
-  if (e.key === "z") {
+  if (e.key === "z" || e.key === "ArrowUp") {
     p1.direction = "North";
     p1.moving = true;
     window.addEventListener("keyup", (e) => {
       p1.moving = false;
     });
-  } else if (e.key === "q") {
+  } else if (e.key === "q" || e.key === "ArrowLeft") {
     p1.direction = "West";
     p1.moving = true;
     window.addEventListener("keyup", (e) => {
       p1.moving = false;
     });
-  } else if (e.key === "d") {
+  } else if (e.key === "d" || e.key === "ArrowRight") {
     p1.direction = "Est";
     p1.moving = true;
     window.addEventListener("keyup", (e) => {
       p1.moving = false;
     });
-  } else if (e.key === "s") {
+  } else if (e.key === "s" || e.key === "ArrowDown") {
     p1.direction = "Sud";
     p1.moving = true;
     window.addEventListener("keyup", (e) => {
